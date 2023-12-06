@@ -1,0 +1,167 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <!-- Switch 1 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewBatteryLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Baja batería en el dispositivo"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchBatteryLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- Switch 2 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewNoise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exceso de ruido ambiental"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchNoise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- Switch 3 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewRestrictedZone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entrada en zona restringida"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchRestrictedZone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- Switch 4 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewTemperatureChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambio brusco de temperatura"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchTemperatureChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- Switch 5 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewNearbyEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notificación de eventos cercanos"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchNearbyEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- Switch 6 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewIntenseActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Actividad física intensa detectada"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchIntenseActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- Switch 7 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewExcessiveSunlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notificación de luz solar excesiva"
+            android:textColor="#000000"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <Switch
+            android:id="@+id/switchExcessiveSunlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+</LinearLayout>

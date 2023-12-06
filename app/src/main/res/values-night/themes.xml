@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SondSense" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/Primario</item>
+        <item name="backgroundColor">@color/Fondo</item>
+        <item name="background">@color/Fondo</item>
+    </style>
+    <style name="Theme.SondSense" parent="Base.Theme.SondSense" />
+</resources>

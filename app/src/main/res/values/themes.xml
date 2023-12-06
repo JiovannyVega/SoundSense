@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SondSense" parent="Theme.Material3.DayNight.NoActionBar">
+        <!--<item name="android:background">@color/colorButton</item> -->
+        <item name="colorPrimary">@color/Primario</item>
+        <item name="backgroundColor">@color/Fondo</item>
+        <item name="background">@color/Fondo</item>
+    </style>
+
+    <style name="Theme.SondSense" parent="Base.Theme.SondSense" />
+
+    <style name="Theme.SondSense.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.SondSense.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.SondSense.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

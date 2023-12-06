@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@color/Fondo">
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00BCD4"
+        app:tabTextColor="@color/black">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabSensibilidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensibilidad"
+            android:icon="@drawable/icono_sensibilidad"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabMetricas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metricas"
+            android:icon="@drawable/icono_metricas"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabAlertas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alertas"
+            android:icon="@drawable/icono_alertas"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabDispositivo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dispositivo"
+            android:icon="@drawable/icono_disositivos"/>
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
+</LinearLayout>
