@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,11 +39,24 @@ public class MainActivity extends AppCompatActivity {
     private TextView texto;
     private TextView modo;
     private SeekBar seek;
+    private static final UUID BT_MODULE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final int REQUEST_ENABLE_BT = 1;
+    private static final int REQUEST_BLUETOOTH_CONNECT_PERMISSION = 3;
+    private static final int REQUEST_FINE_LOCATION_PERMISSION = 2;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        requestBluetoothConnectPermission();
+        requestLocationPermission();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+
+        }
 
 
         tabLayout = findViewById(R.id.tabLayout);
@@ -84,5 +98,24 @@ public class MainActivity extends AppCompatActivity {
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+    }
+    private void requestBluetoothConnectPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_BLUETOOTH_CONNECT_PERMISSION);
+    }
+    // Agrega este método para solicitar el permiso
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION_PERMISSION);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_BLUETOOTH_CONNECT_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "Permiso concedido, ahora puedes utilizar funciones de Bluetooth que requieran BLUETOOTH_CONNECT");
+            } else {
+                Log.d(TAG, "Permiso denegado, debes manejar este caso según tus necesidades");
+            }
+        }
     }
 }
