@@ -1,6 +1,7 @@
 package com.example.sondsense.controlador;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,11 +18,6 @@ import android.widget.Toast;
 import com.example.sondsense.MainActivity;
 import com.example.sondsense.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Sensibilidad#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Sensibilidad extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -35,7 +31,8 @@ public class Sensibilidad extends Fragment {
     private TextView texto;
     private TextView modo;
     private SeekBar seek;
-    private MainActivity.ConnectedThread myConexionBT;
+    private SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     public Sensibilidad() {
         // Required empty public constructor
@@ -62,7 +59,6 @@ public class Sensibilidad extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_sensibilidad, container, false);
 
         texto = view.findViewById(R.id.Modo);
@@ -72,13 +68,13 @@ public class Sensibilidad extends Fragment {
         Button btnInterior = view.findViewById(R.id.Int);
         Button btnExterior = view.findViewById(R.id.Ext);
         Button btnPersonalizado = view.findViewById(R.id.Pers);
-        MainActivity main = new MainActivity();
-        main.getMyConexionBT();
-
+        cargarPreferencias();
         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 texto.setText("Sensibididad actual: " + (progress * 10) + "%");
+                editor.putInt("Sensibilidad", progress);
+                editor.apply();
             }
 
             @Override
@@ -95,25 +91,8 @@ public class Sensibilidad extends Fragment {
             @Override
             public void onClick(View v) {
                 modo.setText("Modo: Interior");
-
-                // Obtener la actividad que contiene este fragmento
-                MainActivity mainActivity = (MainActivity) getActivity();
-
-                if (mainActivity != null) {
-                    // Obtener la conexión Bluetooth desde MainActivity
-                    MainActivity.ConnectedThread myConexionBT = mainActivity.getMyConexionBT();
-
-                    if (myConexionBT != null) {
-                        // Enviar datos a través de la conexión Bluetooth
-                        myConexionBT.write("A");
-                    } else {
-                        // Manejar el caso cuando myConexionBT es nulo
-                        Toast.makeText(getActivity(), "Conexión Bluetooth no disponible", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // Manejar el caso cuando MainActivity es nulo
-                    Toast.makeText(getActivity(), "MainActivity no disponible", Toast.LENGTH_SHORT).show();
-                }
+                editor.putString("Modo" ,modo.getText().toString());
+                editor.apply();
             }
         });
 
@@ -121,12 +100,16 @@ public class Sensibilidad extends Fragment {
             @Override
             public void onClick(View v) {
                 modo.setText("Modo: Exterior");
+                editor.putString("Modo" ,modo.getText().toString());
+                editor.apply();
             }
         });
         btnPersonalizado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modo.setText("Modo: Personalizado");
+                editor.putString("Modo" ,modo.getText().toString());
+                editor.apply();
             }
         });
 
@@ -138,11 +121,19 @@ public class Sensibilidad extends Fragment {
         super.onAttach(context);
         if (context instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) context;
-            myConexionBT = mainActivity.getMyConexionBT();
-            // Ahora puedes usar myConexionBT aquí en Sensibilidad
         } else {
             throw new RuntimeException(context.toString() + " must be MainActivity");
         }
+    }
+
+    private void cargarPreferencias() {
+        preferences = getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        //Seek Bar
+        texto.setText("Sensibididad actual: " + (preferences.getInt("Sensibilidad", 5) * 10) + "%");
+        seek.setProgress(preferences.getInt("Sensibilidad", 5));
+        //Text View
+        modo.setText(preferences.getString("Modo", "Modo: Personalizado"));
     }
 
 }
