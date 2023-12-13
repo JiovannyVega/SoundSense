@@ -46,11 +46,15 @@ public class DispositivosVinculados extends Fragment {
     // Declaracion de campos
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter mPairedDevicesArrayAdapter;
+    private static final int REQUEST_BLUETOOTH_CONNECT_PERMISSION = 3;
+    private static final int REQUEST_FINE_LOCATION_PERMISSION = 2;
 
     private ActivityDispositivosVinculadosBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dispositivos_vinculados, container, false);
+        requestBluetoothConnectPermission();
+        requestLocationPermission();
 
         return view;
     }
@@ -110,5 +114,12 @@ public class DispositivosVinculados extends Fragment {
                 }
             }
         }
+    }
+    private void requestBluetoothConnectPermission() {
+        ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_BLUETOOTH_CONNECT_PERMISSION);
+    }
+    // Agrega este método para solicitar el permiso
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION_PERMISSION);
     }
 }

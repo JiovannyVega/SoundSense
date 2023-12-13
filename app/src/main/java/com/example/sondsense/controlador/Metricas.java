@@ -1,6 +1,9 @@
 package com.example.sondsense.controlador;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.BatteryManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +27,14 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -90,20 +101,20 @@ public class Metricas extends Fragment {
     }
     private void setupBarChart() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0, 10));
-        barEntries.add(new BarEntry(1, 15));
+        barEntries.add(new BarEntry(0, getBatteryLevel()));
+        barEntries.add(new BarEntry(1, (float) getTemperature()));/*
         barEntries.add(new BarEntry(2, 18));
         barEntries.add(new BarEntry(3, 8));
         barEntries.add(new BarEntry(4, 14));
         barEntries.add(new BarEntry(5, 5));
-        barEntries.add(new BarEntry(6, 3));
+        barEntries.add(new BarEntry(6, 3));*/
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Alertas activadas");
 
         BarData barData = new BarData(barDataSet);
 
         // Etiquetas para cada barra
-        String[] barLabels = new String[]{"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+        String[] barLabels = new String[]{"Bateria", "Temperatura actual", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
 
         // Configuración de las etiquetas en el eje X
         XAxis xAxis = barChart.getXAxis();
@@ -116,6 +127,17 @@ public class Metricas extends Fragment {
         barChart.setDrawGridBackground(false); // Deshabilita el fondo de cuadrícula
         barChart.animateY(1000); // Animación de barras
         barChart.invalidate(); // Actualiza el gráfico
+    }
+
+    private int getBatteryLevel() {
+        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = getActivity().registerReceiver(null, ifilter);
+
+        int level = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) : 0;
+        int scale = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1) : 100;
+
+        float batteryPct = level / (float) scale;
+        return (int) (batteryPct * 100);
     }
     private void setupRadarChart() {
         // Datos de ejemplo para el gráfico de radar
@@ -167,4 +189,42 @@ public class Metricas extends Fragment {
         radarChart.getDescription().setEnabled(false);
         radarChart.invalidate(); // Actualiza el gráfico
     }
+    private double getTemperature() {
+        double temperature = 0.0;
+
+        // URL de la API de OpenWeatherMap (ejemplo)
+        String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=YOUR_API_KEY&units=metric"; // Reemplaza YOUR_API_KEY con tu API key
+
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            try {
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                // Parsear la respuesta para obtener la temperatura
+                JSONObject json = new JSONObject(result.toString());
+                if (json.has("main")) {
+                    JSONObject main = json.getJSONObject("main");
+                    if (main.has("temp")) {
+                        temperature = main.getDouble("temp");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                urlConnection.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 20;
+    }
+
 }

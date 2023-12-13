@@ -1,6 +1,7 @@
 package com.example.sondsense.controlador;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -33,6 +34,7 @@ public class Sensibilidad extends Fragment {
     private SeekBar seek;
     private SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private MainActivity.ConnectedThread MyConexionBT;
 
     public Sensibilidad() {
         // Required empty public constructor
@@ -50,6 +52,10 @@ public class Sensibilidad extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = requireActivity().getIntent();
+        if (intent != null) {
+            MyConexionBT = (MainActivity.ConnectedThread) intent.getSerializableExtra("conexion_bt");
+        }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -93,6 +99,9 @@ public class Sensibilidad extends Fragment {
                 modo.setText("Modo: Interior");
                 editor.putString("Modo" ,modo.getText().toString());
                 editor.apply();
+                if(MyConexionBT != null) {
+                    MyConexionBT.write('a');
+                }
             }
         });
 
@@ -102,6 +111,9 @@ public class Sensibilidad extends Fragment {
                 modo.setText("Modo: Exterior");
                 editor.putString("Modo" ,modo.getText().toString());
                 editor.apply();
+                if(MyConexionBT != null) {
+                    MyConexionBT.write('b');
+                }
             }
         });
         btnPersonalizado.setOnClickListener(new View.OnClickListener() {
